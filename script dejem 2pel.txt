@@ -1,0 +1,26 @@
+function doPost(e) {
+  try {
+    // 1. Abra a sua planilha pelo ID (copie o ID da URL da sua planilha)
+    // Exemplo: https://docs.google.com/spreadsheets/d/ID_DA_PLANILHA/edit
+    var ss = SpreadsheetApp.openById("https://docs.google.com/spreadsheets/d/1nMflrqAPtE4Ej4BMC3ShyRJazcUBtKqoietS8VRe23I/edit?gid=0#gid=0");
+    var sheet = ss.getSheetByName("Página1"); // Certifique-se que o nome da aba está correto
+
+    // 2. Extrai os dados enviados pelo formulário HTML
+    var posto = e.parameter.posto;
+    var re = e.parameter.re;
+    var nome = e.parameter.nome;
+    var telefone = e.parameter.telefone; // Novo campo
+    var data_dejem = e.parameter.data_dejem; // Novo campo
+    var vaga = e.parameter.vaga;
+    var dataRegistro = new Date(); // Registra o momento exato da inscrição
+
+    // 3. Adiciona os dados em uma nova linha da planilha
+    sheet.appendRow([dataRegistro, posto, re, nome, telefone, data_dejem, vaga]);
+
+    // 4. Retorna confirmação para o formulário
+    return ContentService.createTextOutput("Sucesso").setMimeType(ContentService.MimeType.TEXT);
+    
+  } catch (f) {
+    return ContentService.createTextOutput("Erro: " + f).setMimeType(ContentService.MimeType.TEXT);
+  }
+}
