@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -19,7 +18,7 @@
 <body>
 
 <div class="container">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Bras%C3%A3o_do_Corpo_de_Bombeiros_da_PMESP.png/1200px-Bras%C3%A3o_do_Corpo_de_Bombeiros_da_PMESP.png" 
+    <img src="https://images.seeklogo.com/logo-png/23/1/corpo-de-bombeiros-de-sao-paulo-logo-png_seeklogo-239694.png" 
          alt="Logo Bombeiros SP" class="logo-bombeiro">
 
     <h2>Escala DEJEM - 2º PEL IBITINGA</h2>
