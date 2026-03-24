@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscrição DEJEM 2PEL IBITINGA</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f9; display: flex; justify-content: center; padding: 20px; }
+        .container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
+        h2 { text-align: center; color: #333; border-bottom: 2px solid #cc0000; padding-bottom: 10px; margin-top: 10px; }
+        label { font-weight: bold; margin-top: 10px; display: block; font-size: 14px; color: #555; }
+        input, select { width: 100%; padding: 10px; margin-top: 5px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px; }
+        button { width: 100%; padding: 12px; background-color: #cc0000; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        button:hover { background-color: #a30000; }
+        #mensagem { text-align: center; font-weight: bold; margin-top: 15px; }
+        .logo-bombeiro { display: block; margin: 0 auto; width: 100px; height: auto; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Bras%C3%A3o_do_Corpo_de_Bombeiros_da_PMESP.png/1200px-Bras%C3%A3o_do_Corpo_de_Bombeiros_da_PMESP.png" 
+         alt="Logo Bombeiros SP" class="logo-bombeiro">
+
+    <h2>Escala DEJEM - 2º PEL IBITINGA</h2>
+    
+    <form id="dejemForm" method="POST">
+        
+        <label for="posto">Posto/Graduação:</label>
+        <select id="posto" name="posto" required>
+            <option value="">Selecione...</option>
+            <option value="1º Ten">1º Ten</option>
+            <option value="2º Ten">2º Ten</option>
+            <option value="Subten">Subten</option>
+            <option value="1º Sgt">1º Sgt</option>
+            <option value="2º Sgt">2º Sgt</option>
+            <option value="3º Sgt">3º Sgt</option>
+            <option value="Cb">Cb</option>
+            <option value="Sd">Sd</option>
+        </select>
+
+        <label for="re">RE (com dígito):</label>
+        <input type="text" id="re" name="re" required placeholder="Ex: 123456-7">
+
+        <label for="nome">Nome de Guerra:</label>
+        <input type="text" id="nome" name="nome" required placeholder="Digite seu nome">
+
+        <label for="telefone">Telefone / WhatsApp:</label>
+        <input type="tel" id="telefone" name="telefone" required placeholder="(16) 99999-9999">
+
+        <label for="data_dejem">Data do Plantão:</label>
+        <input type="date" id="data_dejem" name="data_dejem" required>
+
+        <label for="vaga">Turno:</label>
+        <select id="vaga" name="vaga" required>
+            <option value="">Selecione o turno...</option>
+            <option value="06h às 18h">06h às 18h</option>
+            <option value="18h às 06h">18h às 06h</option>
+        </select>
+
+        <button type="submit" id="btnEnviar">Enviar Inscrição</button>
+        <div id="mensagem"></div>
+    </form>
+</div>
+
+<script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbz4NOA2rD7s3_lH8SYxgy1Hqn8BC_-LyR1PrsorqZs/dev';    
+    const form = document.getElementById('dejemForm');
+    const mensagem = document.getElementById('mensagem');
+    const btnEnviar = document.getElementById('btnEnviar');
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        btnEnviar.disabled = true;
+        btnEnviar.innerText = "Enviando, aguarde...";
+        mensagem.innerText = "";
+
+        const formData = new FormData(form);
+
+        fetch(scriptURL, { method: 'POST', body: formData})
+            .then(response => {
+                mensagem.style.color = "green";
+                mensagem.innerText = "Inscrição enviada com sucesso!";
+                form.reset();
+                btnEnviar.disabled = false;
+                btnEnviar.innerText = "Enviar Inscrição";
+            })
+            .catch(error => {
+                mensagem.style.color = "red";
+                mensagem.innerText = "Erro ao enviar. Tente novamente.";
+                btnEnviar.disabled = false;
+                btnEnviar.innerText = "Enviar Inscrição";
+            });
+    });
+</script>
+
+</body>
+</html>

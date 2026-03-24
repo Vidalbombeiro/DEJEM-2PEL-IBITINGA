@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscrição DEJEM</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f9; display: flex; justify-content: center; padding: 20px; }
+        .container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
+        h2 { text-align: center; color: #333; border-bottom: 2px solid #cc0000; padding-bottom: 10px; }
+        label { font-weight: bold; margin-top: 10px; display: block; font-size: 14px; color: #555; }
+        input, select { width: 100%; padding: 10px; margin-top: 5px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px; }
+        button { width: 100%; padding: 12px; background-color: #cc0000; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; }
+        button:hover { background-color: #a30000; }
+        #mensagem { text-align: center; font-weight: bold; margin-top: 15px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Escala DEJEM</h2>
+    <form id="dejemForm" method="POST">
+        
+        <label for="posto">Posto/Graduação:</label>
+        <select id="posto" name="posto" required>
+            <option value="">Selecione...</option>
+            <option value="Cel">Cel</option>
+            <option value="Ten Cel">Ten Cel</option>
+            <option value="Maj">Maj</option>
+            <option value="Cap">Cap</option>
+            <option value="1º Ten">1º Ten</option>
+            <option value="2º Ten">2º Ten</option>
+            <option value="Subten">Subten</option>
+            <option value="1º Sgt">1º Sgt</option>
+            <option value="2º Sgt">2º Sgt</option>
+            <option value="3º Sgt">3º Sgt</option>
+            <option value="Cb">Cb</option>
+            <option value="Sd">Sd</option>
+        </select>
+
+        <label for="re">RE (com dígito):</label>
+        <input type="text" id="re" name="re" required placeholder="Ex: 123456-7">
+
+        <label for="nome">Nome Completo (Guerra ou Completo):</label>
+        <input type="text" id="nome" name="nome" required placeholder="Digite o nome">
+
+        <label for="vaga">Vaga / Turno:</label>
+        <select id="vaga" name="vaga" required>
+            <option value="">Selecione o turno...</option>
+            <option value="Dia 25/03 - 06h às 18h">Dia 25/03 - 06h às 18h</option>
+            <option value="Dia 25/03 - 18h às 06h">Dia 25/03 - 18h às 06h</option>
+            <option value="Dia 26/03 - 06h às 18h">Dia 26/03 - 06h às 18h</option>
+        </select>
+
+        <button type="submit" id="btnEnviar">Enviar Solicitação</button>
+        <div id="mensagem"></div>
+    </form>
+</div>
+
+<script>
+    // PASSO IMPORTANTE: Substitua o link abaixo pela URL gerada no Google Apps Script
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbz4NOA2rD7s3_lH8SYxgy1Hqn8BC_-LyR1PrsorqZs/dev';    
+    const form = document.getElementById('dejemForm');
+    const mensagem = document.getElementById('mensagem');
+    const btnEnviar = document.getElementById('btnEnviar');
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        btnEnviar.disabled = true;
+        btnEnviar.innerText = "Enviando aguarde...";
+        mensagem.innerText = "";
+
+        const formData = new FormData(form);
+
+        fetch(scriptURL, { method: 'POST', body: formData})
+            .then(response => {
+                mensagem.style.color = "green";
+                mensagem.innerText = "Inscrição enviada com sucesso!";
+                form.reset();
+                btnEnviar.disabled = false;
+                btnEnviar.innerText = "Enviar Solicitação";
+            })
+            .catch(error => {
+                mensagem.style.color = "red";
+                mensagem.innerText = "Erro ao enviar. Tente novamente.";
+                console.error('Erro!', error.message);
+                btnEnviar.disabled = false;
+                btnEnviar.innerText = "Enviar Solicitação";
+            });
+    });
+</script>
+
+</body>
+</html>
